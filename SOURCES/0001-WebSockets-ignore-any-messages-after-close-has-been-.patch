@@ -1,0 +1,95 @@
+From d9c729aa5a7991182fa7bdb8d94442f8f0cf055b Mon Sep 17 00:00:00 2001
+From: Carlos Garcia Campos <cgarcia@igalia.com>
+Date: Fri, 19 Jul 2019 14:56:05 +0200
+Subject: [PATCH] WebSockets: ignore any messages after close has been sent and
+ received
+
+We currently ignore data frames when close has been received, but we
+should also ignore any frame after close has been sent and received.
+Currently, if we receive two close frames we end up with the code and
+reason of the second frame, while the RFC says: "The WebSocket
+Connection Close Code is defined as the status code contained in the
+first Close control frame received by the application implementing
+this protocol."
+---
+ libsoup/soup-websocket-connection.c |  3 ++
+ tests/websocket-test.c              | 48 +++++++++++++++++++++++++++++
+ 2 files changed, 51 insertions(+)
+
+diff --git libsoup/soup-websocket-connection.c libsoup/soup-websocket-connection.c
+--- a/libsoup/soup-websocket-connection.c
++++ b/libsoup/soup-websocket-connection.c
+@@ -690,6 +690,9 @@
+ 	SoupWebsocketConnectionPrivate *pv = self->pv;
+ 	GBytes *message;
+ 
++	if (pv->close_sent && pv->close_received)
++		return;
++
+ 	if (control) {
+ 		/* Control frames must never be fragmented */
+ 		if (!fin) {
+--- a/tests/websocket-test.c
++++ b/tests/websocket-test.c
+@@ -707,6 +707,49 @@
+ }
+ 
+ static gpointer
++close_after_close_server_thread (gpointer user_data)
++{
++	Test *test = user_data;
++	gsize written;
++	const char frames[] =
++		"\x88\x09\x03\xe8""reason1"
++		"\x88\x09\x03\xe8""reason2";
++	GError *error = NULL;
++
++	g_mutex_lock (&test->mutex);
++	g_mutex_unlock (&test->mutex);
++
++	g_output_stream_write_all (g_io_stream_get_output_stream (test->raw_server),
++				   frames, sizeof (frames) -1, &written, NULL, &error);
++	g_assert_no_error (error);
++	g_assert_cmpuint (written, ==, sizeof (frames) - 1);
++	g_io_stream_close (test->raw_server, NULL, &error);
++	g_assert_no_error (error);
++
++	return NULL;
++}
++
++static void
++test_close_after_close (Test *test,
++			gconstpointer data)
++{
++	GThread *thread;
++
++	g_mutex_lock (&test->mutex);
++
++	thread = g_thread_new ("close-after-close-thread", close_after_close_server_thread, test);
++
++	soup_websocket_connection_close (test->client, SOUP_WEBSOCKET_CLOSE_NORMAL, "reason1");
++	g_mutex_unlock (&test->mutex);
++
++	g_thread_join (thread);
++
++	WAIT_UNTIL (soup_websocket_connection_get_state (test->client) == SOUP_WEBSOCKET_STATE_CLOSED);
++	g_assert_cmpuint (soup_websocket_connection_get_close_code (test->client), ==, SOUP_WEBSOCKET_CLOSE_NORMAL);
++	g_assert_cmpstr (soup_websocket_connection_get_close_data (test->client), ==, "reason1");
++}
++
++static gpointer
+ timeout_server_thread (gpointer user_data)
+ {
+ 	Test *test = user_data;
+@@ -918,6 +961,11 @@
+ 		    test_message_after_closing,
+ 		    teardown_soup_connection);
+ 
++	g_test_add ("/websocket/direct/close-after-close", Test, NULL,
++		    setup_half_direct_connection,
++		    test_close_after_close,
++		    teardown_direct_connection);
++
+ 
+ 	g_test_add ("/websocket/direct/protocol-negotiate", Test, NULL, NULL,
+ 		    test_protocol_negotiate_direct,
