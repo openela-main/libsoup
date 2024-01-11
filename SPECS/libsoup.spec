@@ -2,7 +2,7 @@
 
 Name: libsoup
 Version: 2.62.3
-Release: 3%{?dist}
+Release: 4%{?dist}
 Summary: Soup, an HTTP library implementation
 
 License: LGPLv2
@@ -13,6 +13,7 @@ Patch0001: 0001-WebSockets-ignore-any-messages-after-close-has-been-.patch
 Patch0002: 0002-WebSockets-allow-null-characters-in-text-messages-da.patch
 Patch0003: 0003-WebSockets-only-poll-IO-stream-when-needed.patch
 Patch0004: 0004-ntlmv2.patch
+Patch0005: 0005-WebSockets-do-not-start-the-input-source-when-IO-is-closing.patch
 
 BuildRequires: chrpath
 BuildRequires: glib2-devel >= %{glib2_version}
@@ -87,6 +88,9 @@ chrpath --delete $RPM_BUILD_ROOT%{_libdir}/*.so
 %{_datadir}/vala/vapi/libsoup-2.4.vapi
 
 %changelog
+* Mon May 15 2023 Milan Crha <mcrha@redhat.com> - 2.62.3-4
+- Resolves: #2203398 (WebSocket server asserts when a client is closing the connection)
+
 * Fri Sep 16 2022 Milan Crha <mcrha@redhat.com> - 2.62.3-3
 - Resolves: #1938011 (Support for NTLMv2 Authentication)
 
