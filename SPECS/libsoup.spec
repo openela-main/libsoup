@@ -2,7 +2,7 @@
 
 Name: libsoup
 Version: 2.62.3
-Release: 4%{?dist}
+Release: 5%{?dist}
 Summary: Soup, an HTTP library implementation
 
 License: LGPLv2
@@ -23,7 +23,7 @@ BuildRequires: krb5-devel >= 1.11
 BuildRequires: pkgconfig(gobject-introspection-1.0)
 BuildRequires: pkgconfig(libxml-2.0)
 BuildRequires: pkgconfig(sqlite3)
-BuildRequires: %{_bindir}/python3
+BuildRequires: python3-devel
 BuildRequires: vala
 
 Requires: glib2%{?_isa} >= %{glib2_version}
@@ -88,6 +88,9 @@ chrpath --delete $RPM_BUILD_ROOT%{_libdir}/*.so
 %{_datadir}/vala/vapi/libsoup-2.4.vapi
 
 %changelog
+* Tue Sep 05 2023 Milan Crha <mcrha@redhat.com> - 2.62.3-5
+- Resolves: RHEL-2240 (Correct BuildRequires for python3)
+
 * Mon May 15 2023 Milan Crha <mcrha@redhat.com> - 2.62.3-4
 - Resolves: #2203398 (WebSocket server asserts when a client is closing the connection)
 
