@@ -2,7 +2,7 @@
 
 Name: libsoup
 Version: 2.62.3
-Release: 5%{?dist}
+Release: 6%{?dist}
 Summary: Soup, an HTTP library implementation
 
 License: LGPLv2
@@ -14,6 +14,8 @@ Patch0002: 0002-WebSockets-allow-null-characters-in-text-messages-da.patch
 Patch0003: 0003-WebSockets-only-poll-IO-stream-when-needed.patch
 Patch0004: 0004-ntlmv2.patch
 Patch0005: 0005-WebSockets-do-not-start-the-input-source-when-IO-is-closing.patch
+Patch0006: 0001-headers-Strictly-don-t-allow-NUL-bytes.patch
+Patch0007: 0001-websocket-process-the-frame-as-soon-as-we-read-data.patch
 
 BuildRequires: chrpath
 BuildRequires: glib2-devel >= %{glib2_version}
@@ -88,6 +90,12 @@ chrpath --delete $RPM_BUILD_ROOT%{_libdir}/*.so
 %{_datadir}/vala/vapi/libsoup-2.4.vapi
 
 %changelog
+* Tue Nov 12 2024 Tomas Popela <tpopela@redhat.com> - 2.62.3-6
+- Backport upstream patch for CVE-2024-52530 - HTTP request smuggling via stripping null bytes from the ends of header names
+- Backport upstream patch for CVE-2024-52530 - infinite loop while reading websocket data
+- Resolves: RHEL-67076
+- Resolves: RHEL-67067
+
 * Tue Sep 05 2023 Milan Crha <mcrha@redhat.com> - 2.62.3-5
 - Resolves: RHEL-2240 (Correct BuildRequires for python3)
 
