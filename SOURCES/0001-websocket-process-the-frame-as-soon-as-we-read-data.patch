@@ -1,0 +1,15 @@
+diff -up libsoup-2.62.3/libsoup/soup-websocket-connection.c.cve-2024-52532 libsoup-2.62.3/libsoup/soup-websocket-connection.c
+--- libsoup-2.62.3/libsoup/soup-websocket-connection.c.cve-2024-52532	2024-11-12 12:00:27.183570627 +0100
++++ libsoup-2.62.3/libsoup/soup-websocket-connection.c	2024-11-12 12:01:02.334987409 +0100
+@@ -1041,9 +1041,9 @@ soup_websocket_connection_read (SoupWebs
+ 		}
+ 
+ 		pv->incoming->len = len + count;
+-	} while (count > 0);
++		process_incoming (self);
++	} while (count > 0 && !pv->close_sent && !pv->io_closing);
+ 
+-	process_incoming (self);
+ 
+ 	if (end) {
+ 		if (!pv->close_sent || !pv->close_received) {

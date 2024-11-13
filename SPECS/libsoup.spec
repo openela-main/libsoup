@@ -5,12 +5,16 @@
 
 Name: libsoup
 Version: 2.72.0
-Release: 8%{?dist}
+Release: 8%{?dist}.2
 Summary: Soup, an HTTP library implementation
 
 License: LGPLv2
 URL: https://wiki.gnome.org/Projects/libsoup
 Source0: https://download.gnome.org/sources/%{name}/2.72/%{name}-%{version}.tar.xz
+
+Patch: 0001-headers-Strictly-don-t-allow-NUL-bytes.patch
+Patch: 0001-websocket-process-the-frame-as-soon-as-we-read-data.patch
+Patch: 0002-websocket-test-disconnect-error-copy-after-the-test-.patch
 
 BuildRequires: gettext
 BuildRequires: glib2-devel >= %{glib2_version}
@@ -112,6 +116,14 @@ This package contains developer documentation for %{name}.
 %endif
 
 %changelog
+* Tue Nov 12 2024 Tomas Popela <tpopela@redhat.com> - 2.72.0-8.el9_5.2
+- Backport upstream patch for CVE-2024-52532 - infinite loop while reading websocket data
+- Resolves: RHEL-67068
+
+* Tue Nov 12 2024 Tomas Popela <tpopela@redhat.com> - 2.72.0-8.el9_5.1
+- Backport upstream patch for CVE-2024-52530 - HTTP request smuggling via stripping null bytes from the ends of header names
+- Resolves: RHEL-67080
+
 * Mon Aug 09 2021 Mohan Boddu <mboddu@redhat.com> - 2.72.0-8
 - Rebuilt for IMA sigs, glibc 2.34, aarch64 flags
   Related: rhbz#1991688
