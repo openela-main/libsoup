@@ -5,16 +5,23 @@
 
 Name: libsoup
 Version: 2.72.0
-Release: 8%{?dist}.2
+Release: 8%{?dist}.3
 Summary: Soup, an HTTP library implementation
 
 License: LGPLv2
 URL: https://wiki.gnome.org/Projects/libsoup
 Source0: https://download.gnome.org/sources/%{name}/2.72/%{name}-%{version}.tar.xz
 
-Patch: 0001-headers-Strictly-don-t-allow-NUL-bytes.patch
-Patch: 0001-websocket-process-the-frame-as-soon-as-we-read-data.patch
-Patch: 0002-websocket-test-disconnect-error-copy-after-the-test-.patch
+# https://gitlab.gnome.org/GNOME/libsoup/-/merge_requests/402
+Patch: CVE-2024-52530.patch
+# https://gitlab.gnome.org/GNOME/libsoup/-/merge_requests/407
+Patch: CVE-2024-52531.patch
+# https://gitlab.gnome.org/GNOME/libsoup/-/merge_requests/410
+# https://gitlab.gnome.org/GNOME/libsoup/-/merge_requests/414
+Patch: CVE-2024-52532.patch
+
+# https://issues.redhat.com/browse/RHEL-76426
+Patch: fix-ssl-test.patch 
 
 BuildRequires: gettext
 BuildRequires: glib2-devel >= %{glib2_version}
@@ -83,6 +90,9 @@ This package contains developer documentation for %{name}.
 %install
 %meson_install
 
+%check
+%meson_test
+
 %find_lang libsoup
 
 %files -f libsoup.lang
@@ -116,6 +126,10 @@ This package contains developer documentation for %{name}.
 %endif
 
 %changelog
+* Tue Jan 28 2025 Michael Catanzaro <mcatanzaro@redhat.com> - 2.72.0-8.3
+- Backport upstream patch for CVE-2024-52531 - buffer overflow via UTF-8 conversion in soup_header_parse_param_list_strict
+  Resolves: RHEL-76381
+
 * Tue Nov 12 2024 Tomas Popela <tpopela@redhat.com> - 2.72.0-8.el9_5.2
 - Backport upstream patch for CVE-2024-52532 - infinite loop while reading websocket data
 - Resolves: RHEL-67068
