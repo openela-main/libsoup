@@ -2,7 +2,7 @@
 
 Name: libsoup
 Version: 2.62.3
-Release: 7%{?dist}
+Release: 8%{?dist}
 Summary: Soup, an HTTP library implementation
 
 License: LGPLv2
@@ -14,9 +14,23 @@ Patch0002: 0002-WebSockets-allow-null-characters-in-text-messages-da.patch
 Patch0003: 0003-WebSockets-only-poll-IO-stream-when-needed.patch
 Patch0004: 0004-ntlmv2.patch
 Patch0005: 0005-WebSockets-do-not-start-the-input-source-when-IO-is-closing.patch
-Patch0006: 0001-headers-Strictly-don-t-allow-NUL-bytes.patch
-Patch0007: 0001-websocket-process-the-frame-as-soon-as-we-read-data.patch
-Patch0008: 0001-headers-Be-more-robust-against-invalid-input-when-pa.patch
+Patch0006: CVE-2025-52530.patch
+Patch0007: CVE-2025-52531.patch
+Patch0008: CVE-2025-52532.patch
+# https://gitlab.gnome.org/GNOME/libsoup/-/merge_requests/446
+Patch0009: test-cert-expiration.patch
+# https://gitlab.gnome.org/GNOME/libsoup/-/merge_requests/415
+Patch0010: CVE-2025-32050.patch
+Patch0011: CVE-2025-32052.patch
+Patch0012: CVE-2025-32053.patch
+# https://gitlab.gnome.org/GNOME/libsoup/-/merge_requests/440
+Patch0013: CVE-2025-32906.patch
+# https://gitlab.gnome.org/GNOME/libsoup/-/merge_requests/422
+Patch0014: CVE-2025-32911-CVE-2025-32913.patch
+# https://gitlab.gnome.org/GNOME/libsoup/-/merge_requests/421
+Patch0015: CVE-2025-46420.patch
+# https://gitlab.gnome.org/GNOME/libsoup/-/merge_requests/436
+Patch0016: CVE-2025-46421.patch
 
 BuildRequires: chrpath
 BuildRequires: glib2-devel >= %{glib2_version}
@@ -91,6 +105,17 @@ chrpath --delete $RPM_BUILD_ROOT%{_libdir}/*.so
 %{_datadir}/vala/vapi/libsoup-2.4.vapi
 
 %changelog
+* Thu May 01 2025 Michael Catanzaro <mcatanzaro@redhat.com> - 2.62.3-8
+- Backport patches for various CVEs, plus test improvements
+  Resolves: RHEL-85887
+  Resolves: RHEL-85900
+  Resolves: RHEL-85901
+  Resolves: RHEL-87039
+  Resolves: RHEL-87094
+  Resolves: RHEL-87114
+  Resolves: RHEL-88348
+  Resolves: RHEL-88351
+
 * Tue Jan 28 2025 Michael Catanzaro <mcatanzaro@redhat.com> - 2.62.3-7
 - Backport upstream patch for CVE-2024-52531 - buffer overflow via UTF-8 conversion in soup_header_parse_param_list_strict
   Resolves: RHEL-76376
