@@ -5,7 +5,7 @@
 
 Name: libsoup
 Version: 2.72.0
-Release: 10%{?dist}
+Release: 10%{?dist}.1
 Summary: Soup, an HTTP library implementation
 
 License: LGPLv2
@@ -13,9 +13,13 @@ URL: https://wiki.gnome.org/Projects/libsoup
 Source0: https://download.gnome.org/sources/%{name}/2.72/%{name}-%{version}.tar.xz
 
 # https://gitlab.gnome.org/GNOME/libsoup/-/merge_requests/426
-Patch:   test-timeouts.patch
+Patch: test-timeouts.patch
 # https://issues.redhat.com/browse/RHEL-76426
 Patch: fix-ssl-test.patch
+# https://gitlab.gnome.org/GNOME/libsoup/-/merge_requests/446
+Patch: test-cert-expiration.patch
+# https://gitlab.gnome.org/GNOME/libsoup/-/merge_requests/454
+Patch: server-test-timeouts.patch
 
 # https://gitlab.gnome.org/GNOME/libsoup/-/merge_requests/402
 Patch: CVE-2024-52530.patch
@@ -24,6 +28,20 @@ Patch: CVE-2024-52531.patch
 # https://gitlab.gnome.org/GNOME/libsoup/-/merge_requests/410
 # https://gitlab.gnome.org/GNOME/libsoup/-/merge_requests/414
 Patch: CVE-2024-52532.patch
+# https://gitlab.gnome.org/GNOME/libsoup/-/merge_requests/415
+Patch: CVE-2025-32050.patch
+Patch: CVE-2025-32052.patch
+Patch: CVE-2025-32053.patch
+# https://gitlab.gnome.org/GNOME/libsoup/-/merge_requests/440
+Patch: CVE-2025-32906.patch
+# https://gitlab.gnome.org/GNOME/libsoup/-/merge_requests/422
+Patch: CVE-2025-32911-CVE-2025-32913.patch
+# https://gitlab.gnome.org/GNOME/libsoup/-/merge_requests/452
+Patch: CVE-2025-32907.patch
+# https://gitlab.gnome.org/GNOME/libsoup/-/merge_requests/421
+Patch: CVE-2025-46420.patch
+# https://gitlab.gnome.org/GNOME/libsoup/-/merge_requests/436
+Patch: CVE-2025-46421.patch
 
 BuildRequires: gettext
 BuildRequires: glib2-devel >= %{glib2_version}
@@ -128,6 +146,18 @@ This package contains developer documentation for %{name}.
 %endif
 
 %changelog
+* Wed Apr 30 2025 Michael Catanzaro <mcatanzaro@redhat.com> - 2.72.0-10.1
+- Backport patches for various CVEs, plus test improvements
+  Resolves: RHEL-85906
+  Resolves: RHEL-85912
+  Resolves: RHEL-85919
+  Resolves: RHEL-87061
+  Resolves: RHEL-87069
+  Resolves: RHEL-87102
+  Resolves: RHEL-87120
+  Resolves: RHEL-88364
+  Resolves: RHEL-88367
+
 * Tue Jan 28 2025 Michael Catanzaro <mcatanzaro@redhat.com> - 2.72.0-10
 - Enable tests in check, and add patches to fix tests
   Resolves: RHEL-76426
