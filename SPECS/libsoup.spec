@@ -5,12 +5,17 @@
 
 Name: libsoup
 Version: 2.72.0
-Release: 8%{?dist}.3
+Release: 10%{?dist}
 Summary: Soup, an HTTP library implementation
 
 License: LGPLv2
 URL: https://wiki.gnome.org/Projects/libsoup
 Source0: https://download.gnome.org/sources/%{name}/2.72/%{name}-%{version}.tar.xz
+
+# https://gitlab.gnome.org/GNOME/libsoup/-/merge_requests/426
+Patch:   test-timeouts.patch
+# https://issues.redhat.com/browse/RHEL-76426
+Patch: fix-ssl-test.patch
 
 # https://gitlab.gnome.org/GNOME/libsoup/-/merge_requests/402
 Patch: CVE-2024-52530.patch
@@ -19,9 +24,6 @@ Patch: CVE-2024-52531.patch
 # https://gitlab.gnome.org/GNOME/libsoup/-/merge_requests/410
 # https://gitlab.gnome.org/GNOME/libsoup/-/merge_requests/414
 Patch: CVE-2024-52532.patch
-
-# https://issues.redhat.com/browse/RHEL-76426
-Patch: fix-ssl-test.patch 
 
 BuildRequires: gettext
 BuildRequires: glib2-devel >= %{glib2_version}
@@ -126,17 +128,14 @@ This package contains developer documentation for %{name}.
 %endif
 
 %changelog
-* Tue Jan 28 2025 Michael Catanzaro <mcatanzaro@redhat.com> - 2.72.0-8.3
-- Backport upstream patch for CVE-2024-52531 - buffer overflow via UTF-8 conversion in soup_header_parse_param_list_strict
-  Resolves: RHEL-76381
+* Tue Jan 28 2025 Michael Catanzaro <mcatanzaro@redhat.com> - 2.72.0-10
+- Enable tests in check, and add patches to fix tests
+  Resolves: RHEL-76426
 
-* Tue Nov 12 2024 Tomas Popela <tpopela@redhat.com> - 2.72.0-8.el9_5.2
-- Backport upstream patch for CVE-2024-52532 - infinite loop while reading websocket data
-- Resolves: RHEL-67068
-
-* Tue Nov 12 2024 Tomas Popela <tpopela@redhat.com> - 2.72.0-8.el9_5.1
-- Backport upstream patch for CVE-2024-52530 - HTTP request smuggling via stripping null bytes from the ends of header names
-- Resolves: RHEL-67080
+* Fri Jan 10 2025 Michael Catanzaro <mcatanzaro@redhat.com> - 2.72.0-9
+- Add patches for CVE-2024-52530, CVE-2024-52531, and CVE-2024-52532
+  Resolves: RHEL-67069
+  Resolves: RHEL-67081
 
 * Mon Aug 09 2021 Mohan Boddu <mboddu@redhat.com> - 2.72.0-8
 - Rebuilt for IMA sigs, glibc 2.34, aarch64 flags
