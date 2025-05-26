@@ -5,7 +5,7 @@
 
 Name: libsoup
 Version: 2.72.0
-Release: 10%{?dist}.1
+Release: 10%{?dist}.2
 Summary: Soup, an HTTP library implementation
 
 License: LGPLv2
@@ -42,6 +42,14 @@ Patch: CVE-2025-32907.patch
 Patch: CVE-2025-46420.patch
 # https://gitlab.gnome.org/GNOME/libsoup/-/merge_requests/436
 Patch: CVE-2025-46421.patch
+# https://gitlab.gnome.org/GNOME/libsoup/-/merge_requests/408 (simplified)
+Patch: CVE-2025-32049.patch
+# https://gitlab.gnome.org/GNOME/libsoup/-/merge_requests/450
+Patch: CVE-2025-32914.patch
+# https://gitlab.gnome.org/GNOME/libsoup/-/issues/422
+Patch: CVE-2025-2784.patch
+# https://gitlab.gnome.org/GNOME/libsoup/-/merge_requests/463
+Patch: CVE-2025-4948.patch
 
 BuildRequires: gettext
 BuildRequires: glib2-devel >= %{glib2_version}
@@ -146,6 +154,13 @@ This package contains developer documentation for %{name}.
 %endif
 
 %changelog
+* Wed May 21 2025 Michael Catanzaro <mcatanzaro@redhat.com> - 2.72.0-10.2
+- Backport patches for various CVEs
+  Resolves: RHEL-85888
+  Resolves: RHEL-87081
+  Resolves: RHEL-88332
+  Resolves: RHEL-92285
+
 * Wed Apr 30 2025 Michael Catanzaro <mcatanzaro@redhat.com> - 2.72.0-10.1
 - Backport patches for various CVEs, plus test improvements
   Resolves: RHEL-85906
