@@ -2,7 +2,7 @@
 
 Name: libsoup
 Version: 2.62.3
-Release: 8%{?dist}
+Release: 9%{?dist}
 Summary: Soup, an HTTP library implementation
 
 License: LGPLv2
@@ -14,9 +14,9 @@ Patch0002: 0002-WebSockets-allow-null-characters-in-text-messages-da.patch
 Patch0003: 0003-WebSockets-only-poll-IO-stream-when-needed.patch
 Patch0004: 0004-ntlmv2.patch
 Patch0005: 0005-WebSockets-do-not-start-the-input-source-when-IO-is-closing.patch
-Patch0006: CVE-2025-52530.patch
-Patch0007: CVE-2025-52531.patch
-Patch0008: CVE-2025-52532.patch
+Patch0006: CVE-2024-52530.patch
+Patch0007: CVE-2024-52531.patch
+Patch0008: CVE-2024-52532.patch
 # https://gitlab.gnome.org/GNOME/libsoup/-/merge_requests/446
 Patch0009: test-cert-expiration.patch
 # https://gitlab.gnome.org/GNOME/libsoup/-/merge_requests/415
@@ -31,6 +31,18 @@ Patch0014: CVE-2025-32911-CVE-2025-32913.patch
 Patch0015: CVE-2025-46420.patch
 # https://gitlab.gnome.org/GNOME/libsoup/-/merge_requests/436
 Patch0016: CVE-2025-46421.patch
+# https://gitlab.gnome.org/GNOME/libsoup/-/merge_requests/408 (simplified)
+Patch0017: CVE-2025-32049.patch
+# https://gitlab.gnome.org/GNOME/libsoup/-/merge_requests/450
+Patch0018: CVE-2025-32914.patch
+# https://gitlab.gnome.org/GNOME/libsoup/-/issues/422
+Patch0019: CVE-2025-2784.patch
+# https://gitlab.gnome.org/GNOME/libsoup/-/merge_requests/463
+Patch0020: CVE-2025-4948.patch
+# https://issues.redhat.com/browse/RHEL-76426
+Patch0021: fix-ssl-test.patch
+# https://gitlab.gnome.org/GNOME/libsoup/-/merge_requests/454
+Patch0022: server-test-timeouts.patch
 
 BuildRequires: chrpath
 BuildRequires: glib2-devel >= %{glib2_version}
@@ -105,6 +117,14 @@ chrpath --delete $RPM_BUILD_ROOT%{_libdir}/*.so
 %{_datadir}/vala/vapi/libsoup-2.4.vapi
 
 %changelog
+* Thu May 22 2025 Michael Catanzaro <mcatanzaro@redhat.com> - 2.62.3-9
+- Add patches to improve test reliability
+- Backport patches for various CVEs
+  Resolves: RHEL-85879
+  Resolves: RHEL-92280
+  Resolves: RHEL-93031
+  Resolves: RHEL-93032
+
 * Thu May 01 2025 Michael Catanzaro <mcatanzaro@redhat.com> - 2.62.3-8
 - Backport patches for various CVEs, plus test improvements
   Resolves: RHEL-85887
