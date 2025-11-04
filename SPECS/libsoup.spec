@@ -2,7 +2,7 @@
 
 Name: libsoup
 Version: 2.62.3
-Release: 9%{?dist}
+Release: 10%{?dist}
 Summary: Soup, an HTTP library implementation
 
 License: LGPLv2
@@ -43,6 +43,8 @@ Patch0020: CVE-2025-4948.patch
 Patch0021: fix-ssl-test.patch
 # https://gitlab.gnome.org/GNOME/libsoup/-/merge_requests/454
 Patch0022: server-test-timeouts.patch
+# https://gitlab.gnome.org/GNOME/libsoup/-/merge_requests/473
+Patch0023: CVE-2025-4945-CVE-2025-11021.patch
 
 BuildRequires: chrpath
 BuildRequires: glib2-devel >= %{glib2_version}
@@ -117,6 +119,9 @@ chrpath --delete $RPM_BUILD_ROOT%{_libdir}/*.so
 %{_datadir}/vala/vapi/libsoup-2.4.vapi
 
 %changelog
+* Thu Oct 30 2025 Michael Catanzaro <mcatanzaro@redhat.com> - 2.62.3-10
+- Backport patch for CVE-2025-4945 and CVE-2025-11021
+
 * Thu May 22 2025 Michael Catanzaro <mcatanzaro@redhat.com> - 2.62.3-9
 - Add patches to improve test reliability
 - Backport patches for various CVEs
