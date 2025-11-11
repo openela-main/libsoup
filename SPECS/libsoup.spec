@@ -5,7 +5,7 @@
 
 Name: libsoup
 Version: 2.72.0
-Release: 10%{?dist}.3
+Release: 12%{?dist}.1
 Summary: Soup, an HTTP library implementation
 
 License: LGPLv2
@@ -156,27 +156,27 @@ This package contains developer documentation for %{name}.
 %endif
 
 %changelog
-* Thu Oct 30 2025 Michael Catanzaro <mcatanzaro@redhat.com> - 2.72.0-10.3
+* Thu Oct 30 2025 Michael Catanzaro <mcatanzaro@redhat.com> - 2.72.0-12.1
 - Backport patch for CVE-2025-4945 and CVE-2025-11021
 
-* Wed May 21 2025 Michael Catanzaro <mcatanzaro@redhat.com> - 2.72.0-10.2
+* Wed May 21 2025 Michael Catanzaro <mcatanzaro@redhat.com> - 2.72.0-12
 - Backport patches for various CVEs
+  Resolves: RHEL-84797
   Resolves: RHEL-85888
-  Resolves: RHEL-87081
-  Resolves: RHEL-88332
-  Resolves: RHEL-92285
+  Resolves: RHEL-87080
+  Resolves: RHEL-92284
 
-* Wed Apr 30 2025 Michael Catanzaro <mcatanzaro@redhat.com> - 2.72.0-10.1
+* Wed Apr 30 2025 Michael Catanzaro <mcatanzaro@redhat.com> - 2.72.0-11
 - Backport patches for various CVEs, plus test improvements
-  Resolves: RHEL-85906
-  Resolves: RHEL-85912
-  Resolves: RHEL-85919
-  Resolves: RHEL-87061
-  Resolves: RHEL-87069
-  Resolves: RHEL-87102
-  Resolves: RHEL-87120
-  Resolves: RHEL-88364
-  Resolves: RHEL-88367
+  Resolves: RHEL-85909
+  Resolves: RHEL-85915
+  Resolves: RHEL-85920
+  Resolves: RHEL-87058
+  Resolves: RHEL-87068
+  Resolves: RHEL-87101
+  Resolves: RHEL-87119
+  Resolves: RHEL-88360
+  Resolves: RHEL-88363
 
 * Tue Jan 28 2025 Michael Catanzaro <mcatanzaro@redhat.com> - 2.72.0-10
 - Enable tests in check, and add patches to fix tests
