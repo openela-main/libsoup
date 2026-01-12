@@ -5,7 +5,7 @@
 
 Name: libsoup
 Version: 2.72.0
-Release: 12%{?dist}.1
+Release: 12%{?dist}.3
 Summary: Soup, an HTTP library implementation
 
 License: LGPLv2
@@ -52,6 +52,8 @@ Patch: CVE-2025-2784.patch
 Patch: CVE-2025-4948.patch
 # https://gitlab.gnome.org/GNOME/libsoup/-/merge_requests/473
 Patch: CVE-2025-4945-CVE-2025-11021.patch
+# https://gitlab.gnome.org/GNOME/libsoup/-/merge_requests/491
+Patch: CVE-2025-14523.patch
 
 BuildRequires: gettext
 BuildRequires: glib2-devel >= %{glib2_version}
@@ -156,6 +158,12 @@ This package contains developer documentation for %{name}.
 %endif
 
 %changelog
+* Thu Jan 08 2026 Michael Catanzaro <mcatanzaro@redhat.com> - 2.72.0-12.3
+- Fix patch for CVE-2025-14523 to handle comparison case-insensitively
+
+* Wed Jan 07 2026 Michael Catanzaro <mcatanzaro@redhat.com> - 2.72.0-12.2
+- Backport patch for CVE-2025-14523
+
 * Thu Oct 30 2025 Michael Catanzaro <mcatanzaro@redhat.com> - 2.72.0-12.1
 - Backport patch for CVE-2025-4945 and CVE-2025-11021
 
