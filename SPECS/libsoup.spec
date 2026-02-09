@@ -2,7 +2,7 @@
 
 Name: libsoup
 Version: 2.62.3
-Release: 11%{?dist}
+Release: 13%{?dist}
 Summary: Soup, an HTTP library implementation
 
 License: LGPLv2
@@ -47,6 +47,12 @@ Patch0022: server-test-timeouts.patch
 Patch0023: CVE-2025-4945-CVE-2025-11021.patch
 # https://gitlab.gnome.org/GNOME/libsoup/-/issues/472
 Patch0024: CVE-2025-14523.patch
+# Downstream patch, needed due to glib2 gnutls-hmac.patch
+Patch0025: no-ntlm-in-fips-mode.patch
+# https://gitlab.gnome.org/GNOME/libsoup/-/merge_requests/494
+Patch0026: CVE-2026-0719.patch
+# https://gitlab.gnome.org/GNOME/libsoup/-/merge_requests/496
+Patch0027: CVE-2026-1761.patch
 
 BuildRequires: chrpath
 BuildRequires: glib2-devel >= %{glib2_version}
@@ -121,6 +127,13 @@ chrpath --delete $RPM_BUILD_ROOT%{_libdir}/*.so
 %{_datadir}/vala/vapi/libsoup-2.4.vapi
 
 %changelog
+* Mon Feb 02 2026 Michael Catanzaro <mcatanzaro@redhat.com> - 2.62.3-13
+- Backport patch for CVE-2026-1761
+
+* Fri Jan 30 2026 Michael Catanzaro <mcatanzaro@redhat.com> - 2.62.3-12
+- Backport patch for CVE-2026-0719
+- Fix NTLM authentication test failures in FIPS mode
+
 * Wed Jan 07 2026 Michael Catanzaro <mcatanzaro@redhat.com> - 2.62.3-11
 - Backport patch for CVE-2025-14523
 
