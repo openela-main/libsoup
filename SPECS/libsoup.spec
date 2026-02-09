@@ -5,12 +5,15 @@
 
 Name: libsoup
 Version: 2.72.0
-Release: 12%{?dist}.3
+Release: 12%{?dist}.5
 Summary: Soup, an HTTP library implementation
 
 License: LGPLv2
 URL: https://wiki.gnome.org/Projects/libsoup
 Source0: https://download.gnome.org/sources/%{name}/2.72/%{name}-%{version}.tar.xz
+
+# Downstream patch, needed due to glib2 gnutls-hmac.patch
+Patch:   no-ntlm-in-fips-mode.patch
 
 # https://gitlab.gnome.org/GNOME/libsoup/-/merge_requests/426
 Patch: test-timeouts.patch
@@ -54,6 +57,10 @@ Patch: CVE-2025-4948.patch
 Patch: CVE-2025-4945-CVE-2025-11021.patch
 # https://gitlab.gnome.org/GNOME/libsoup/-/merge_requests/491
 Patch: CVE-2025-14523.patch
+# https://gitlab.gnome.org/GNOME/libsoup/-/merge_requests/494
+Patch: CVE-2026-0719.patch
+# https://gitlab.gnome.org/GNOME/libsoup/-/merge_requests/496
+Patch: CVE-2026-1761.patch
 
 BuildRequires: gettext
 BuildRequires: glib2-devel >= %{glib2_version}
@@ -158,6 +165,13 @@ This package contains developer documentation for %{name}.
 %endif
 
 %changelog
+* Mon Feb 02 2026 Michael Catanzaro <mcatanzaro@redhat.com> - 2.72.0-12.5
+- Backport patch for CVE-2026-1761
+
+* Fri Jan 30 2026 Michael Catanzaro <mcatanzaro@redhat.com> - 2.72.0-12.4
+- Backport patch for CVE-2026-0719
+- Fix NTLM authentication test failures in FIPS mode
+
 * Thu Jan 08 2026 Michael Catanzaro <mcatanzaro@redhat.com> - 2.72.0-12.3
 - Fix patch for CVE-2025-14523 to handle comparison case-insensitively
 
