@@ -2,13 +2,14 @@
 
 Name: libsoup
 Version: 2.62.3
-Release: 13%{?dist}
+Release: 14%{?dist}
 Summary: Soup, an HTTP library implementation
 
 License: LGPLv2
 URL: https://wiki.gnome.org/Projects/libsoup
 Source0: https://download.gnome.org/sources/%{name}/2.62/%{name}-%{version}.tar.xz
 
+Patch0000: fix-tests-without-apache.patch
 Patch0001: 0001-WebSockets-ignore-any-messages-after-close-has-been-.patch
 Patch0002: 0002-WebSockets-allow-null-characters-in-text-messages-da.patch
 Patch0003: 0003-WebSockets-only-poll-IO-stream-when-needed.patch
@@ -53,6 +54,8 @@ Patch0025: no-ntlm-in-fips-mode.patch
 Patch0026: CVE-2026-0719.patch
 # https://gitlab.gnome.org/GNOME/libsoup/-/merge_requests/496
 Patch0027: CVE-2026-1761.patch
+# https://gitlab.gnome.org/GNOME/libsoup/-/merge_requests/516
+Patch0028: CVE-2026-5119.patch
 
 BuildRequires: chrpath
 BuildRequires: glib2-devel >= %{glib2_version}
@@ -106,6 +109,9 @@ rm -f $RPM_BUILD_ROOT/%{_libdir}/*.la
 # Remove lib64 rpaths
 chrpath --delete $RPM_BUILD_ROOT%{_libdir}/*.so
 
+%check
+make %{?_smp_mflags} check
+
 %find_lang libsoup
 
 %files -f libsoup.lang
@@ -127,6 +133,10 @@ chrpath --delete $RPM_BUILD_ROOT%{_libdir}/*.so
 %{_datadir}/vala/vapi/libsoup-2.4.vapi
 
 %changelog
+* Mon May 04 2026 Michael Catanzaro <mcatanzaro@redhat.com> - 2.62.3-14
+- Backport patch for CVE-2026-5119
+- Run testsuite during RPM check phase
+
 * Mon Feb 02 2026 Michael Catanzaro <mcatanzaro@redhat.com> - 2.62.3-13
 - Backport patch for CVE-2026-1761
 

@@ -1,0 +1,55 @@
+From 97914f85e1e90303159246bff0768de0b03ff0ba Mon Sep 17 00:00:00 2001
+From: Michael Catanzaro <mcatanzaro@redhat.com>
+Date: Thu, 8 Jan 2026 13:43:39 -0600
+Subject: [PATCH] Fix tests when running without Apache installed
+
+We are supposed to run all the non-Apache tests if Apache is not
+installed.
+
+Note: this patch applies to the tarball, not to the git repo.
+---
+ tests/Makefile.in | 28 ++++++++++++++--------------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
+
+diff --git a/tests/Makefile.in b/tests/Makefile.in
+index 91f5372..9f6a187 100644
+--- a/tests/Makefile.in
++++ b/tests/Makefile.in
+@@ -2067,20 +2067,20 @@ uninstall-am: uninstall-installed_testLTLIBRARIES \
+ soup-tests.gresource: soup-tests.gresource.xml $(RESOURCES)
+ 	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) $<
+ 
+-check: start-httpd
+-
+-check-local: check-TESTS
+-	@$(MAKE) kill-httpd
+-
+-.PHONY: start-httpd kill-httpd
+-
+-start-httpd:
+-	@$(APACHE_HTTPD) -d $(abs_srcdir) -c "DefaultRuntimeDir `pwd`" -c "PidFile `pwd`/httpd.pid" -f `pwd`/httpd.conf -k start;
+-
+-kill-httpd:
+-	@if [ -f httpd.pid ]; then \
+-		$(APACHE_HTTPD) -d $(abs_srcdir) -c "DefaultRuntimeDir `pwd`" -c "PidFile `pwd`/httpd.pid" -f `pwd`/httpd.conf -k stop; \
+-	fi
++@HAVE_APACHE_TRUE@check: start-httpd
++@HAVE_APACHE_TRUE@
++@HAVE_APACHE_TRUE@check-local: check-TESTS
++@HAVE_APACHE_TRUE@	@$(MAKE) kill-httpd
++@HAVE_APACHE_TRUE@
++@HAVE_APACHE_TRUE@.PHONY: start-httpd kill-httpd
++@HAVE_APACHE_TRUE@
++@HAVE_APACHE_TRUE@start-httpd:
++@HAVE_APACHE_TRUE@	@$(APACHE_HTTPD) -d $(abs_srcdir) -c "DefaultRuntimeDir `pwd`" -c "PidFile `pwd`/httpd.pid" -f `pwd`/httpd.conf -k start;
++@HAVE_APACHE_TRUE@
++@HAVE_APACHE_TRUE@kill-httpd:
++@HAVE_APACHE_TRUE@	@if [ -f httpd.pid ]; then \
++@HAVE_APACHE_TRUE@		$(APACHE_HTTPD) -d $(abs_srcdir) -c "DefaultRuntimeDir `pwd`" -c "PidFile `pwd`/httpd.pid" -f `pwd`/httpd.conf -k stop; \
++@HAVE_APACHE_TRUE@	fi
+ 
+ # Tell versions [3.59,3.63) of GNU make to not export all variables.
+ # Otherwise a system limit (for SysV at least) may be exceeded.
+-- 
+2.52.0
+
