@@ -5,7 +5,7 @@
 
 Name: libsoup
 Version: 2.72.0
-Release: 12%{?dist}.6
+Release: 16%{?dist}.1
 Summary: Soup, an HTTP library implementation
 
 License: LGPLv2
@@ -167,23 +167,20 @@ This package contains developer documentation for %{name}.
 %endif
 
 %changelog
-* Mon May 04 2026 Michael Catanzaro <mcatanzaro@redhat.com> - 2.72.0-12.6
+* Mon May 04 2026 Michael Catanzaro <mcatanzaro@redhat.com> - 2.72.0-16.1
 - Backport patch for CVE-2026-5119
 
-* Mon Feb 02 2026 Michael Catanzaro <mcatanzaro@redhat.com> - 2.72.0-12.5
+* Mon Feb 02 2026 Michael Catanzaro <mcatanzaro@redhat.com> - 2.72.0-16
 - Backport patch for CVE-2026-1761
 
-* Fri Jan 30 2026 Michael Catanzaro <mcatanzaro@redhat.com> - 2.72.0-12.4
+* Fri Jan 30 2026 Michael Catanzaro <mcatanzaro@redhat.com> - 2.72.0-15
 - Backport patch for CVE-2026-0719
 - Fix NTLM authentication test failures in FIPS mode
 
-* Thu Jan 08 2026 Michael Catanzaro <mcatanzaro@redhat.com> - 2.72.0-12.3
-- Fix patch for CVE-2025-14523 to handle comparison case-insensitively
-
-* Wed Jan 07 2026 Michael Catanzaro <mcatanzaro@redhat.com> - 2.72.0-12.2
+* Thu Jan 08 2026 Michael Catanzaro <mcatanzaro@redhat.com> - 2.72.0-14
 - Backport patch for CVE-2025-14523
 
-* Thu Oct 30 2025 Michael Catanzaro <mcatanzaro@redhat.com> - 2.72.0-12.1
+* Thu Oct 30 2025 Michael Catanzaro <mcatanzaro@redhat.com> - 2.72.0-13
 - Backport patch for CVE-2025-4945 and CVE-2025-11021
 
 * Wed May 21 2025 Michael Catanzaro <mcatanzaro@redhat.com> - 2.72.0-12
