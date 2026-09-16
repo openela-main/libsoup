@@ -2,7 +2,7 @@
 
 Name: libsoup
 Version: 2.62.3
-Release: 14%{?dist}
+Release: 15%{?dist}
 Summary: Soup, an HTTP library implementation
 
 License: LGPLv2
@@ -56,6 +56,8 @@ Patch0026: CVE-2026-0719.patch
 Patch0027: CVE-2026-1761.patch
 # https://gitlab.gnome.org/GNOME/libsoup/-/merge_requests/516
 Patch0028: CVE-2026-5119.patch
+# https://gitlab.gnome.org/GNOME/libsoup/-/commit/60aa1ce2bdc7bb5da33be9062f50bcec7db67fca
+Patch0029: CVE-2026-15711.patch
 
 BuildRequires: chrpath
 BuildRequires: glib2-devel >= %{glib2_version}
@@ -133,6 +135,9 @@ make %{?_smp_mflags} check
 %{_datadir}/vala/vapi/libsoup-2.4.vapi
 
 %changelog
+* Tue Sep 08 2026 RHEL Packaging Agent <redhat-ymir-agent@redhat.com> - 2.62.3-15
+- Backport patch for CVE-2026-15711
+
 * Mon May 04 2026 Michael Catanzaro <mcatanzaro@redhat.com> - 2.62.3-14
 - Backport patch for CVE-2026-5119
 - Run testsuite during RPM check phase
