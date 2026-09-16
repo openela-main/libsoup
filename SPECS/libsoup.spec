@@ -5,7 +5,7 @@
 
 Name: libsoup
 Version: 2.72.0
-Release: 16%{?dist}.1
+Release: 16%{?dist}.3
 Summary: Soup, an HTTP library implementation
 
 License: LGPLv2
@@ -63,6 +63,10 @@ Patch: CVE-2026-0719.patch
 Patch: CVE-2026-1761.patch
 # https://gitlab.gnome.org/GNOME/libsoup/-/merge_requests/516
 Patch: CVE-2026-5119.patch
+# https://gitlab.gnome.org/GNOME/libsoup/-/commit/a4294044466df66ea98492d67bb74172ed3f8762
+Patch: CVE-2026-15709.patch
+# https://gitlab.gnome.org/GNOME/libsoup/-/commit/60aa1ce2bdc7bb5da33be9062f50bcec7db67fca
+Patch: CVE-2026-15711.patch
 
 BuildRequires: gettext
 BuildRequires: glib2-devel >= %{glib2_version}
@@ -167,6 +171,12 @@ This package contains developer documentation for %{name}.
 %endif
 
 %changelog
+* Tue Sep 08 2026 RHEL Packaging Agent <redhat-ymir-agent@redhat.com> - 2.72.0-16.3
+- Fix CVE-2026-15711: Reject oversized WebSocket control frames
+
+* Tue Sep 08 2026 RHEL Packaging Agent <redhat-ymir-agent@redhat.com> - 2.72.0-16.2
+- Backport patch for CVE-2026-15709
+
 * Mon May 04 2026 Michael Catanzaro <mcatanzaro@redhat.com> - 2.72.0-16.1
 - Backport patch for CVE-2026-5119
 
