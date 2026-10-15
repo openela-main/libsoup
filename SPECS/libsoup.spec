@@ -5,7 +5,7 @@
 
 Name: libsoup
 Version: 2.72.0
-Release: 16%{?dist}.3
+Release: 16%{?dist}.8
 Summary: Soup, an HTTP library implementation
 
 License: LGPLv2
@@ -67,6 +67,16 @@ Patch: CVE-2026-5119.patch
 Patch: CVE-2026-15709.patch
 # https://gitlab.gnome.org/GNOME/libsoup/-/commit/60aa1ce2bdc7bb5da33be9062f50bcec7db67fca
 Patch: CVE-2026-15711.patch
+# https://gitlab.gnome.org/GNOME/libsoup/-/commit/d7f074f8c8c90216f2476522836287c6f80fc53e
+Patch: CVE-2026-102557.patch
+# https://gitlab.gnome.org/GNOME/libsoup/-/commit/dbd0417ea3a569135e9a9344b7812076b7b178f1
+Patch: CVE-2026-102560.patch
+# https://gitlab.gnome.org/GNOME/libsoup/-/commit/d7f074f8c8c90216f2476522836287c6f80fc53e
+Patch: CVE-2026-102559.patch
+# https://gitlab.gnome.org/GNOME/libsoup/-/commit/381a474ff437d0f7573d2bb3e8d3027260ab584f
+Patch: CVE-2026-102558.patch
+# https://gitlab.gnome.org/GNOME/libsoup/-/commit/d2cbaf25f81a9ce041714cf842c366c67b0b873e
+Patch: CVE-2026-102556.patch
 
 BuildRequires: gettext
 BuildRequires: glib2-devel >= %{glib2_version}
@@ -171,6 +181,26 @@ This package contains developer documentation for %{name}.
 %endif
 
 %changelog
+* Wed Sep 30 2026 RHEL Packaging Agent <redhat-ymir-agent@redhat.com> - 2.72.0-16.8
+- CVE-2026-102556 libsoup: libsoup: Heap buffer overflow from WebSocket
+  Pong signal type confusion
+
+* Wed Sep 30 2026 RHEL Packaging Agent <redhat-ymir-agent@redhat.com> - 2.72.0-16.7
+- CVE-2026-102558 libsoup: libsoup: Heap buffer overflow during WebSocket
+  receive-buffer growth
+
+* Tue Sep 29 2026 RHEL Packaging Agent <redhat-ymir-agent@redhat.com> - 2.72.0-16.6
+- CVE-2026-102559 libsoup: libsoup: Heap buffer overflow during WebSocket
+  client-frame masking
+
+* Tue Sep 29 2026 RHEL Packaging Agent <redhat-ymir-agent@redhat.com> - 2.72.0-16.5
+- CVE-2026-102560 libsoup: libsoup: Heap buffer overflow during outgoing
+  permessage-deflate buffer growth
+
+* Tue Sep 29 2026 RHEL Packaging Agent <redhat-ymir-agent@redhat.com> - 2.72.0-16.4
+- CVE-2026-102557 libsoup: libsoup: Heap buffer overflow during WebSocket message reassembly
+  message reassembly
+
 * Tue Sep 08 2026 RHEL Packaging Agent <redhat-ymir-agent@redhat.com> - 2.72.0-16.3
 - Fix CVE-2026-15711: Reject oversized WebSocket control frames
 
