@@ -2,7 +2,7 @@
 
 Name: libsoup
 Version: 2.62.3
-Release: 15%{?dist}
+Release: 19%{?dist}
 Summary: Soup, an HTTP library implementation
 
 License: LGPLv2
@@ -58,6 +58,16 @@ Patch0027: CVE-2026-1761.patch
 Patch0028: CVE-2026-5119.patch
 # https://gitlab.gnome.org/GNOME/libsoup/-/commit/60aa1ce2bdc7bb5da33be9062f50bcec7db67fca
 Patch0029: CVE-2026-15711.patch
+# https://gitlab.gnome.org/GNOME/libsoup/-/commit/d7f074f8c8c90216f2476522836287c6f80fc53e
+Patch0030: CVE-2026-102559.patch
+# https://gitlab.gnome.org/GNOME/libsoup/-/commit/d2cbaf25
+Patch0031: CVE-2026-102556.patch
+# https://gitlab.gnome.org/GNOME/libsoup/-/commit/381a474ff437d0f7573d2bb3e8d3027260ab584f
+# https://gitlab.gnome.org/GNOME/libsoup/-/commit/d7f074f8c8c90216f2476522836287c6f80fc53e
+Patch0032: CVE-2026-102558.patch
+# https://gitlab.gnome.org/GNOME/libsoup/-/commit/381a474ff437d0f7573d2bb3e8d3027260ab584f
+# https://gitlab.gnome.org/GNOME/libsoup/-/commit/d7f074f8c8c90216f2476522836287c6f80fc53e
+Patch0033: CVE-2026-102557.patch
 
 BuildRequires: chrpath
 BuildRequires: glib2-devel >= %{glib2_version}
@@ -135,6 +145,22 @@ make %{?_smp_mflags} check
 %{_datadir}/vala/vapi/libsoup-2.4.vapi
 
 %changelog
+* Wed Sep 30 2026 RHEL Packaging Agent <redhat-ymir-agent@redhat.com> - 2.62.3-19
+- CVE-2026-102557 libsoup: libsoup: Heap buffer overflow during WebSocket
+  message reassembly
+
+* Wed Sep 30 2026 RHEL Packaging Agent <redhat-ymir-agent@redhat.com> - 2.62.3-18
+- CVE-2026-102558 libsoup: libsoup: Heap buffer overflow during WebSocket
+  receive-buffer growth
+
+* Wed Sep 30 2026 RHEL Packaging Agent <redhat-ymir-agent@redhat.com> - 2.62.3-17
+- CVE-2026-102556 libsoup: libsoup: Heap buffer overflow from WebSocket Pong
+  signal type confusion
+
+* Wed Sep 30 2026 RHEL Packaging Agent <redhat-ymir-agent@redhat.com> - 2.62.3-16
+- CVE-2026-102559 libsoup: libsoup: Heap buffer overflow during WebSocket client-frame masking
+  client-frame masking
+
 * Tue Sep 08 2026 RHEL Packaging Agent <redhat-ymir-agent@redhat.com> - 2.62.3-15
 - Backport patch for CVE-2026-15711
 
